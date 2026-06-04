@@ -1,0 +1,106 @@
+// Product Interfaces
+
+interface Car {
+    void drive();
+}
+
+interface Bike {
+    void ride();
+}
+
+// Honda Products
+
+class HondaCar implements Car {
+    @Override
+    public void drive() {
+        System.out.println("Driving Honda Car");
+    }
+}
+
+class HondaBike implements Bike {
+    @Override
+    public void ride() {
+        System.out.println("Riding Honda Bike");
+    }
+}
+
+// Toyota Products
+
+class ToyotaCar implements Car {
+    @Override
+    public void drive() {
+        System.out.println("Driving Toyota Car");
+    }
+}
+
+class ToyotaBike implements Bike {
+    @Override
+    public void ride() {
+        System.out.println("Riding Toyota Bike");
+    }
+}
+
+// Abstract Factory
+
+interface VehicleFactory {
+    Car createCar();
+    Bike createBike();
+}
+
+// Honda Factory
+
+class HondaFactory implements VehicleFactory {
+
+    @Override
+    public Car createCar() {
+        return new HondaCar();
+    }
+
+    @Override
+    public Bike createBike() {
+        return new HondaBike();
+    }
+}
+
+// Toyota Factory
+
+class ToyotaFactory implements VehicleFactory {
+
+    @Override
+    public Car createCar() {
+        return new ToyotaCar();
+    }
+
+    @Override
+    public Bike createBike() {
+        return new ToyotaBike();
+    }
+}
+
+// Client
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        // Entire Honda Family
+        VehicleFactory hondaFactory = new HondaFactory();
+
+        Car hondaCar = hondaFactory.createCar();
+        Bike hondaBike = hondaFactory.createBike();
+
+        hondaCar.drive();
+        hondaBike.ride();
+
+        System.out.println("----------------");
+
+        // Entire Toyota Family
+        VehicleFactory toyotaFactory = new ToyotaFactory();
+
+        Car toyotaCar = toyotaFactory.createCar();
+        Bike toyotaBike = toyotaFactory.createBike();
+
+        toyotaCar.drive();
+        toyotaBike.ride();
+    }
+}
