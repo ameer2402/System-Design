@@ -1,5 +1,8 @@
-// Product Interfaces
+# Abstract Factory Pattern - Vehicle Example
 
+## Product Interfaces
+
+```java
 interface Car {
     void drive();
 }
@@ -7,10 +10,15 @@ interface Car {
 interface Bike {
     void ride();
 }
+```
 
-// Honda Products
+---
 
+## Honda Products
+
+```java
 class HondaCar implements Car {
+
     @Override
     public void drive() {
         System.out.println("Driving Honda Car");
@@ -18,15 +26,21 @@ class HondaCar implements Car {
 }
 
 class HondaBike implements Bike {
+
     @Override
     public void ride() {
         System.out.println("Riding Honda Bike");
     }
 }
+```
 
-// Toyota Products
+---
 
+## Toyota Products
+
+```java
 class ToyotaCar implements Car {
+
     @Override
     public void drive() {
         System.out.println("Driving Toyota Car");
@@ -34,21 +48,32 @@ class ToyotaCar implements Car {
 }
 
 class ToyotaBike implements Bike {
+
     @Override
     public void ride() {
         System.out.println("Riding Toyota Bike");
     }
 }
+```
 
-// Abstract Factory
+---
 
+## Abstract Factory
+
+```java
 interface VehicleFactory {
+
     Car createCar();
+
     Bike createBike();
 }
+```
 
-// Honda Factory
+---
 
+## Honda Factory
+
+```java
 class HondaFactory implements VehicleFactory {
 
     @Override
@@ -61,9 +86,13 @@ class HondaFactory implements VehicleFactory {
         return new HondaBike();
     }
 }
+```
 
-// Toyota Factory
+---
 
+## Toyota Factory
+
+```java
 class ToyotaFactory implements VehicleFactory {
 
     @Override
@@ -76,14 +105,18 @@ class ToyotaFactory implements VehicleFactory {
         return new ToyotaBike();
     }
 }
+```
 
-// Client
+---
 
+## Client Code
+
+```java
 public class Main {
 
     public static void main(String[] args) {
 
-        // Entire Honda Family
+        // Honda Family
         VehicleFactory hondaFactory = new HondaFactory();
 
         Car hondaCar = hondaFactory.createCar();
@@ -94,7 +127,7 @@ public class Main {
 
         System.out.println("----------------");
 
-        // Entire Toyota Family
+        // Toyota Family
         VehicleFactory toyotaFactory = new ToyotaFactory();
 
         Car toyotaCar = toyotaFactory.createCar();
@@ -104,3 +137,44 @@ public class Main {
         toyotaBike.ride();
     }
 }
+```
+
+---
+
+## Output
+
+```text
+Driving Honda Car
+Riding Honda Bike
+----------------
+Driving Toyota Car
+Riding Toyota Bike
+```
+
+---
+
+## Flow Diagram
+
+```text
+                    VehicleFactory
+                          ▲
+          ┌───────────────┴───────────────┐
+          │                               │
+    HondaFactory                    ToyotaFactory
+          │                               │
+    ┌─────┴─────┐                   ┌─────┴─────┐
+    │           │                   │           │
+HondaCar   HondaBike          ToyotaCar   ToyotaBike
+```
+
+---
+
+## Key Takeaway
+
+```text
+Factory Pattern
+    → Creates ONE Product
+
+Abstract Factory Pattern
+    → Creates a FAMILY of Related Products
+```
