@@ -1,8 +1,7 @@
-# Abstract Factory Pattern - Vehicle Example
+// ======================================================
+// PRODUCT INTERFACES
+// ======================================================
 
-## Product Interfaces
-
-```java
 interface Car {
     void drive();
 }
@@ -10,13 +9,11 @@ interface Car {
 interface Bike {
     void ride();
 }
-```
 
----
+// ======================================================
+// HONDA PRODUCTS
+// ======================================================
 
-## Honda Products
-
-```java
 class HondaCar implements Car {
 
     @Override
@@ -32,13 +29,11 @@ class HondaBike implements Bike {
         System.out.println("Riding Honda Bike");
     }
 }
-```
 
----
+// ======================================================
+// TOYOTA PRODUCTS
+// ======================================================
 
-## Toyota Products
-
-```java
 class ToyotaCar implements Car {
 
     @Override
@@ -54,26 +49,22 @@ class ToyotaBike implements Bike {
         System.out.println("Riding Toyota Bike");
     }
 }
-```
 
----
+// ======================================================
+// ABSTRACT FACTORY
+// ======================================================
 
-## Abstract Factory
-
-```java
 interface VehicleFactory {
 
     Car createCar();
 
     Bike createBike();
 }
-```
 
----
+// ======================================================
+// HONDA FACTORY
+// ======================================================
 
-## Honda Factory
-
-```java
 class HondaFactory implements VehicleFactory {
 
     @Override
@@ -86,13 +77,11 @@ class HondaFactory implements VehicleFactory {
         return new HondaBike();
     }
 }
-```
 
----
+// ======================================================
+// TOYOTA FACTORY
+// ======================================================
 
-## Toyota Factory
-
-```java
 class ToyotaFactory implements VehicleFactory {
 
     @Override
@@ -105,13 +94,11 @@ class ToyotaFactory implements VehicleFactory {
         return new ToyotaBike();
     }
 }
-```
 
----
+// ======================================================
+// CLIENT
+// ======================================================
 
-## Client Code
-
-```java
 public class Main {
 
     public static void main(String[] args) {
@@ -137,44 +124,3 @@ public class Main {
         toyotaBike.ride();
     }
 }
-```
-
----
-
-## Output
-
-```text
-Driving Honda Car
-Riding Honda Bike
-----------------
-Driving Toyota Car
-Riding Toyota Bike
-```
-
----
-
-## Flow Diagram
-
-```text
-                    VehicleFactory
-                          ▲
-          ┌───────────────┴───────────────┐
-          │                               │
-    HondaFactory                    ToyotaFactory
-          │                               │
-    ┌─────┴─────┐                   ┌─────┴─────┐
-    │           │                   │           │
-HondaCar   HondaBike          ToyotaCar   ToyotaBike
-```
-
----
-
-## Key Takeaway
-
-```text
-Factory Pattern
-    → Creates ONE Product
-
-Abstract Factory Pattern
-    → Creates a FAMILY of Related Products
-```
