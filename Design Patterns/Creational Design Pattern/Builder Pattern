@@ -1,0 +1,199 @@
+/**
+ * Builder Design Pattern Example
+ *
+ * Purpose:
+ * - Create complex objects step by step.
+ * - Avoid large constructors with many parameters.
+ * - Improve readability using method chaining.
+ * - Create immutable objects.
+ */
+
+public final class Car {
+
+    // ==========================
+    // Immutable Fields
+    // ==========================
+    // final => value can be assigned only once
+    // No setters => state cannot be modified after creation
+
+    private final String engine;
+    private final int wheels;
+    private final int seats;
+    private final String color;
+    private final boolean sunroof;
+    private final boolean navigationSystem;
+
+    /**
+     * Private constructor.
+     *
+     * Prevents direct object creation:
+     * Car car = new Car(...); ❌
+     *
+     * Objects can only be created through the Builder.
+     */
+    private Car(CarBuilder builder) {
+        this.engine = builder.engine;
+        this.wheels = builder.wheels;
+        this.seats = builder.seats;
+        this.color = builder.color;
+        this.sunroof = builder.sunroof;
+        this.navigationSystem = builder.navigationSystem;
+    }
+
+    // ==========================
+    // Getter Methods
+    // ==========================
+
+    public String getEngine() {
+        return engine;
+    }
+
+    public int getWheels() {
+        return wheels;
+    }
+
+    public int getSeats() {
+        return seats;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public boolean hasSunroof() {
+        return sunroof;
+    }
+
+    public boolean hasNavigationSystem() {
+        return navigationSystem;
+    }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "engine='" + engine + '\'' +
+                ", wheels=" + wheels +
+                ", seats=" + seats +
+                ", color='" + color + '\'' +
+                ", sunroof=" + sunroof +
+                ", navigationSystem=" + navigationSystem +
+                '}';
+    }
+
+    // ==================================================
+    // Static Nested Builder Class
+    // ==================================================
+    /*
+     * Why static?
+     *
+     * If Builder is not static:
+     *
+     * Car car = new Car(...);
+     * CarBuilder builder = car.new CarBuilder();
+     *
+     * We would need a Car object before creating
+     * a CarBuilder, which defeats the purpose.
+     *
+     * Making it static allows:
+     *
+     * Car.CarBuilder builder = new Car.CarBuilder();
+     */
+
+    public static class CarBuilder {
+
+        // Fields used to collect values before creating Car
+
+        private String engine;
+
+        // Default values (optional)
+        private int wheels = 4;
+        private int seats = 5;
+        private String color = "Black";
+        private boolean sunroof = false;
+        private boolean navigationSystem = false;
+
+        /**
+         * Sets engine value.
+         *
+         * return this => returns the current builder object
+         * allowing method chaining.
+         */
+        public CarBuilder setEngine(String engine) {
+            this.engine = engine;
+            return this;
+        }
+
+        public CarBuilder setWheels(int wheels) {
+            this.wheels = wheels;
+            return this;
+        }
+
+        public CarBuilder setSeats(int seats) {
+            this.seats = seats;
+            return this;
+        }
+
+        public CarBuilder setColor(String color) {
+            this.color = color;
+            return this;
+        }
+
+        public CarBuilder setSunroof(boolean sunroof) {
+            this.sunroof = sunroof;
+            return this;
+        }
+
+        public CarBuilder setNavigationSystem(boolean navigationSystem) {
+            this.navigationSystem = navigationSystem;
+            return this;
+        }
+
+        /**
+         * Creates the final Car object.
+         *
+         * Until build() is called,
+         * only the Builder object exists.
+         *
+         * build() acts as the final step
+         * that converts Builder -> Car.
+         */
+        public Car build() {
+
+            // Example validation
+            if (engine == null || engine.isBlank()) {
+                throw new IllegalStateException(
+                        "Engine is mandatory");
+            }
+
+            return new Car(this);
+        }
+    }
+}
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        // Creating first car
+
+        Car car1 = new Car.CarBuilder()
+                .setEngine("V8")
+                .setColor("Red")
+                .setSeats(5)
+                .setSunroof(true)
+                .setNavigationSystem(true)
+                .build();
+
+        System.out.println(car1);
+
+        // Creating second car
+
+        Car car2 = new Car.CarBuilder()
+                .setEngine("V6")
+                .setColor("Blue")
+                .setSeats(4)
+                .build();
+
+        System.out.println(car2);
+    }
+}
